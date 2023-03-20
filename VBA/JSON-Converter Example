@@ -1,0 +1,26 @@
+Sub jsonTest()
+    Dim http As Object, JSON As Object, i As Integer
+    
+    Set http = CreateObject("MSXML2.XMLHTTP")
+    
+    http.Open "GET", "http://jsonplaceholder.typicode.com/users", False
+    http.send
+    
+    Set JSON = ParseJson(http.responseText)
+    
+    i = 2
+    
+    For Each Item In JSON
+        Sheets(1).Cells(i, 1).Value = Item("id")
+        Sheets(1).Cells(i, 2).Value = Item("name")
+        Sheets(1).Cells(i, 3).Value = Item("username")
+        Sheets(1).Cells(i, 4).Value = Item("email")
+        Sheets(1).Cells(i, 5).Value = Item("address")("city")
+        Sheets(1).Cells(i, 6).Value = Item("phone")
+        Sheets(1).Cells(i, 7).Value = Item("website")
+        Sheets(1).Cells(i, 8).Value = Item("company")("name")
+        i = i + 1
+    Next
+    
+    MsgBox ("complete")
+End Sub
